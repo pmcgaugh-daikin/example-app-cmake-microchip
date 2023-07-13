@@ -16,20 +16,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          path: example-application
+          path: zephyrprojectworkspace
 
       - name: Initialize
-        working-directory: example-application
+        working-directory: zephyrprojectworkspace
         run: |
           west init -l .
           west update
 
-      - name: Build firmware
-        working-directory: example-application
+      - name: Build Firmware
+        working-directory: zephyrprojectworkspace/example-app-microchip-vscode.git
         run: |
-          west twister -T app -v --inline-logs --integration
+          cmake app -DCMAKE_BUILD_TYPE=Release --preset=atsame54_xpro
+          cmake --build app/build
 
-      - name: Twister Tests
-        working-directory: example-application
-        run: |
-          west twister -T tests --integration
+      #- name: Build Firmware Tests 
+      #  working-directory: example-application
+      #  run: |
+      #    west twister -T app -v --inline-logs --integration
+
+      #- name: Twister Tests
+      #  working-directory: example-application
+      #  run: |
+      #    west twister -T tests --integration

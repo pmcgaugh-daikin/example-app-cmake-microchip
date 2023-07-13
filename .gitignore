@@ -9,5 +9,6 @@
 /build*
 /app/build*
 /twister-out*
+cmake.check_cache
 
 __pycache__/

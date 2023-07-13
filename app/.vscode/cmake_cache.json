@@ -1,0 +1,4 @@
+{
+  "BOARD_DIR" : "C:/src/microchip-zephyr-workspace/zephyr/boards/arm/atsame54_xpro",
+  "CONFIG_SOC_PART_NUMBER" : "same54p20a"
+}

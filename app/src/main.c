@@ -1,6 +1,11 @@
 /*
+ * Copyright (c) 2023 Daikin Comfort Technologies North America, Inc.
  * Copyright (c) 2021 Nordic Semiconductor ASA
  * SPDX-License-Identifier: Apache-2.0
+ * 
+ * This file has been modified by Daikin Comfort Technologies North America, Inc.
+ *  - remove sensor references and add counter logging
+ * 
  */
 
 #include <zephyr/kernel.h>
@@ -12,10 +17,7 @@ LOG_MODULE_REGISTER(main, CONFIG_APP_LOG_LEVEL);
 
 int main(void)
 {
-	int ret;
-	const struct device *sensor;
-
-	printk("Zephyr Example Application %s\n", APP_VERSION_STRING);
+    printk("Zephyr Example Application %s\n", APP_VERSION_STRING);
 
 	//sensor = DEVICE_DT_GET(DT_NODELABEL(examplesensor0));
 	//if (!device_is_ready(sensor)) {
@@ -24,7 +26,7 @@ int main(void)
 	//}
 
 	while (1) {
-		//struct sensor_value val;
+		struct sensor_value val;
 //
 		//ret = sensor_sample_fetch(sensor);
 		//if (ret < 0) {
@@ -39,7 +41,9 @@ int main(void)
 		//}
 //
 		//printk("Sensor value: %d\n", val.val1);
-
+        static int cnt = 0;
+        cnt++;
+        LOG_INF("Current iteration: %d", cnt);
 		k_sleep(K_MSEC(1000));
 	}
 

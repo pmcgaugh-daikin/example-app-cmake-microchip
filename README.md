@@ -41,18 +41,18 @@ environment. Follow the official
 ### Initialization
 
 The first step is to initialize the workspace folder (``my-workspace``) where
-the ``example-application`` and all Zephyr modules will be cloned. Run the following
+the ``example-app-microchip-vscode`` and all Zephyr modules will be cloned. Run the following
 command:
 
 ```shell
 # initialize my-workspace for the example-application (main branch)
-west init -m https://github.com/zephyrproject-rtos/example-application --mr main my-workspace
+west init -m https://github.com/pmcgaugh-daikin/example-app-microchip-vscode.git --mr main my-workspace
 # update Zephyr modules
 cd my-workspace
 west update
 ```
 
-### Building and running
+### Building and running with west
 
 To build the application, run the following command:
 
@@ -62,7 +62,7 @@ west build -b $BOARD app
 
 where `$BOARD` is the target board.
 
-You can use the `custom_plank` board found in this
+You can use the `atsame54_xpro` board found in this
 repository. Note that Zephyr sample boards may be used if an
 appropriate overlay is provided (see `app/boards`).
 
@@ -70,11 +70,18 @@ A sample debug configuration is also provided. To apply it, run the following
 command:
 
 ```shell
-west build -b $BOARD app -- -DOVERLAY_CONFIG=debug.conf
+west build -b $BOARD app -- -DOVERLAY_CONFIG="debug.conf"
 ```
 
 Once you have built the application, run the following command to flash it:
 
 ```shell
 west flash
+```
+
+### Building and running with cmake
+From the application repository directory:
+```shell
+cmake app -DCMAKE_BUILD_TYPE=Release --preset=atsame54_xpro
+cmake --build app/build
 ```

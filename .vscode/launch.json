@@ -1,0 +1,141 @@
+// Copyright (c) 2023 Daikin Comfort Technologies North America, Inc.
+// SPDX-License-Identifier: Apache-2.0
+{
+  "configurations": [
+    {
+      "name": "App Debug (OpenOCD)",
+      "cwd": "${workspaceRoot}",
+      "executable": "${command:cmake.launchTargetPath}",
+      "request": "launch",
+      "type": "cortex-debug",
+      "servertype": "openocd",
+      "configFiles": [
+        "${input:app.board_dir}/support/openocd.cfg"
+      ],
+      "device": "${input:app.soc_part_number}",
+      "interface": "swd",
+      //"svdFile": "${input:project.svd}",
+      "armToolchainPath": "${workspaceRoot}/../../zephyr-sdk-0.16.0/arm-zephyr-eabi/bin",
+      "toolchainPrefix": "arm-zephyr-eabi",
+      "runToEntryPoint": "main",
+      "preLaunchTask": "build",
+      "rtos": "Zephyr"
+      //"cmsisPack": ""
+    },
+    {
+      "name": "Ceedling Test Explorer Debug",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/support/ceedling/build/test/out/${command:ceedlingExplorer.debugTestExecutable}",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb.exe",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    {
+      "name": "Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Bootloader",
+      "cwd": "${workspaceRoot}",
+      "executable": "./boot/build/zephyr/boot.elf",
+      "request": "launch",
+      "type": "cortex-debug",
+      "serverpath": "C:/Program Files (x86)/SEGGER/JLink/JLinkGDBServerCL.exe",
+      "servertype": "jlink",
+      "device": "stm32f412RE",
+      "interface": "swd",
+      "runToMain": true,
+      "svdFile": "./STM32F412.svd"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "project.openocd",
+      "type": "command",
+      "command": "extension.commandvariable.remember",
+      "args": {
+        "key": "openocd"
+      }
+    },
+    {
+      "id": "project.board",
+      "type": "command",
+      "command": "extension.commandvariable.remember",
+      "args": {
+        "key": "board"
+      }
+    },
+    {
+      "id": "project.svd",
+      "type": "command",
+      "command": "extension.commandvariable.remember",
+      "args": {
+        "key": "svd"
+      }
+    },
+    {
+      "id": "project.soc",
+      "type": "command",
+      "command": "extension.commandvariable.remember",
+      "args": {
+        "key": "soc"
+      }
+    },
+    {
+      "id": "project.build",
+      "type": "command",
+      "command": "extension.commandvariable.remember",
+      "args": {
+        "key": "build"
+      }
+    },
+    {
+      "id": "app.board_dir",
+      "type": "command",
+      "command": "extension.commandvariable.file.content",
+      "args": {
+        "fileName": "${workspaceFolder}/app/.vscode/cmake_cache.json",
+        "json": "content.BOARD_DIR",
+        "default": "",
+        "keyRemember": "app.board_dir"
+      }
+    },
+    {
+        "id": "app.soc_part_number",
+        "type": "command",
+        "command": "extension.commandvariable.file.content",
+        "args": {
+            "fileName": "${workspaceFolder}/app/.vscode/cmake_cache.json",
+            "json": "content.CONFIG_SOC_PART_NUMBER",
+            "default": "",
+            "keyRemember": "CONFIG_SOC_PART_NUMBER"
+        }
+    },
+    {
+        "id": "app.soc_part_number",
+        "type": "command",
+        "command": "extension.commandvariable.file.content",
+        "args": {
+            "fileName": "${workspaceFolder}/app/.vscode/cmake_cache.json",
+            "json": "content.CONFIG_SOC_PART_NUMBER",
+            "default": "",
+            "keyRemember": "CONFIG_SOC_PART_NUMBER"
+        }
+    }
+  ]
+}
