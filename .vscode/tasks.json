@@ -8,12 +8,11 @@
 			"type": "shell",
 			"command": "python",
 			"args": [
-				"${workspaceFolder}/support/scripts/save_config.py",
-				"${workspaceFolder}/.vscode/local_config.json",
-				"${input:project.board}",
-				"${input:project.soc}",
-				"${input:project.svd}",
-				"${input:project.openocd}"
+				"${workspaceFolder}/scripts/save_config.py",
+				"${workspaceFolder}/.vscode/config_store.json",
+				"board", "${input:project.board}",
+				"svd", "${input:project.svd}",
+				"openocd", "${input:project.openocd}"
 			],
 			"dependsOn": [
 				"Config Prompt"
@@ -21,13 +20,10 @@
 			"options": {
 				"statusbar": {
 					"hide": false,
-					"label": "$(settings) Config Project",
+					"label": "$(target) Target",
 					"tooltip": "Configure your projects Tasks and Launch Settings (required before flash or debug)",
 					"color": "#ffbe78"
 				}
-			},
-			"runOptions": {
-				"runOn": "folderOpen"
 			}
 		},
 		{
@@ -35,11 +31,12 @@
 			"type": "shell",
 			"command": "echo",
 			"args": [
-				"${input:project.project}",
+                "${input:project.config}",
+                "==============================================",
 				"Remembered project.board: ${input:project.board}",
-				"Remembered project.soc: ${input:project.soc}",
 				"Remembered project.svd: ${input:project.svd}",
-				"Remembered project.openocd: ${input:project.openocd}"
+				"Remembered project.openocd: ${input:project.openocd}",
+                "=============================================="
 			],
 			"options": {
 				"statusbar": {
@@ -47,13 +44,34 @@
 				}
 			}
 		},
+        {
+            "label": "Startup Config",
+            "type": "shell",
+            "command": "echo",
+            "args": [
+                "Restored the following from local_config.json:",
+                "==============================================",
+                "SVD File: ${input:remember.svd}",
+                "Board Target: ${input:remember.board}",
+                "OpenOCD File: ${input:remember.openocd}",
+                "=============================================="
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
 		{
-			"label": "Flash (openOCD)",
+			"label": "Flash App",
 			"type": "shell",
 			"command": "openocd",
 			"args": [
 				"-f",
-				"${input:project.openocd}",
+				"${input:remember.openocd}",
 				"-c",
 				"program build/zephyr/zephyr.elf verify reset exit"
 			],
@@ -63,7 +81,7 @@
 			"options": {
 				"statusbar": {
 					"hide": false,
-					"label": "$(desktop-download) Flash OpenOCD",
+					"label": "$(desktop-download) Flash App",
 					"tooltip": "Flash your seleted chip over OpenOCD",
 					"color": "#fc9d92"
 				}
@@ -85,36 +103,6 @@
 					"label": "$(gather) Build",
 					"tooltip": "Build your software using CMake",
 					"color": "#9cff6b"
-				}
-			}
-		},
-		{
-			"label": "West Build Bootloader",
-			"type": "shell",
-			"group": "build",
-			"command": "west",
-			"args": [
-				"build",
-				"-p",
-				"auto",
-				"-d",
-				"${config:app_boot.build_dir}",
-				"-b",
-				"${config:bsp.board}${config:bsp.cpu}",
-				"${config:app_boot.name}",
-				"${config:app_boot.zephyr_config}",
-				"${config:app_boot.zephyr_dtc_overlay}",
-				"${config:app_boot.compile_args}"
-			],
-			"dependsOn": [
-				"Set Zephyr Source"
-			],
-			"problemMatcher": [
-				"$gcc"
-			],
-			"options": {
-				"statusbar": {
-					"hide": true
 				}
 			}
 		},
@@ -242,84 +230,54 @@
 					"hide": true
 				}
 			}
-		}
+		},
+        {
+            "label": "Build MCUBoot",
+            "type": "shell",
+            "group": "build",
+            "command": "west",
+            "args": [
+                "build",
+                "-b",
+                "atsame54_xpro",
+                "-p",
+                "auto",
+                "../bootloader/mcuboot/boot/zephyr",
+                "--",
+                "-DDTC_OVERLAY_FILE='../../../../mchp-zephyr-demo.git/app/confs_overlays/atsame54_xpro_mcuboot_partitions.overlay;usb_cdc_acm.overlay;../../../../mchp-zephyr-demo.git/app/confs_overlays/bootloader/atsame54_xpro_bootloader.overlay;app.overlay'",
+                "-DEXTRA_CONF_FILE='../../../../mchp-zephyr-demo.git/app/confs_overlays/bootloader/atsame54_xpro_bootloader.conf;usb_cdc_acm_log_recovery.conf'"
+            ],
+            "dependsOn": [
+                "Set Zephyr Source"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "options": {
+                "statusbar": {
+                    "hide": false
+                }
+            }
+        }
 	],
 	"inputs": [
 		{
-			"id": "project.project",
+			"id": "project.config",
 			"type": "command",
 			"command": "extension.commandvariable.pickStringRemember",
 			"args": {
 				"key": "empty",
-				"options": [
-					[
-						"ItsyBitsy M4 Express",
-						{
-							"openocd": "${workspaceFolder}/support/openocd/samd51j19_openocd.cfg",
-							"svd": "${workspaceFolder}/support/svd/ATSAMD51J19A.svd",
-							"board": "adafruit_itsybitsy_m4_express",
-							"soc": "atsamd51j19",
-						},
-					],
-					[
-						"M90",
-						{
-							"openocd": "${workspaceFolder}/boards/arm/daikin_m90/support/openocd.cfg",
-							"svd": "${workspaceFolder}/support/svd/ATSAMD20J17.svd",
-							"board": "daikin_m90",
-							"soc": "atsamd20j17"
-						},
-					],
-					[
-						"Hotel California",
-						{
-							"openocd": "${workspaceFolder}/boards/arm/daikin_hotel_california/support/openocd.cfg",
-							"svd": "${workspaceFolder}/support/svd/ATSAMD51N20A.svd",
-							"board": "daikin_hotel_california",
-							"soc": "atsamd51n20"
-						}
-					],
-					[
-						"ATSAME54 XPro",
-						{
-							"openocd": "${workspaceFolder}/support/openocd/same54p20a_openocd.cfg",
-							"svd": "${workspaceFolder}/support/svd/ATSAME54P20A.svd",
-							"board": "atsame54_xpro",
-							"soc": "atsame54p20"
-						}
-					],
-					[
-						"Daikin 405_406",
-						{
-							"openocd": "${workspaceFolder}/boards/arm/daikin_405_406/support/openocd.cfg",
-							"svd": "${workspaceFolder}/support/svd/ATSAMD51N20A.svd",
-							"board": "daikin_405_406",
-							"soc": "atsamd51n20"
-						}
-					],
-
-				],
+                "fileName":"${workspaceFolder}/.vscode/target_config.json",
+                "fileFormat":"json",
+                "jsonOption": {
+                    "label": "content.targets[__itemIdx__].name",
+                    "value": {
+                        "openocd": "content.targets[__itemIdx__].openocd",
+                        "svd": "content.targets[__itemIdx__].svd",
+                        "board": "content.targets[__itemIdx__].board"
+                    }
+                },
 				"description": "Choose a Board"
-			}
-		},
-		{
-			"id": "pickBuild",
-			"type": "command",
-			"command": "extension.commandvariable.pickStringRemember",
-			"args": {
-				"key": "build",
-				"description": "Choose a Build",
-				"default": "Debug",
-				"options": [
-					[
-						"Debug Build",
-						"Debug"
-					],
-					[
-						"Release Build",
-						"Release"
-					]
-				],
 			}
 		},
 		{
@@ -346,32 +304,38 @@
 				"key": "svd"
 			}
 		},
-		{
-			"id": "project.soc",
-			"type": "command",
-			"command": "extension.commandvariable.remember",
-			"args": {
-				"key": "soc"
-			}
-		},
-		{
-			"id": "project.build",
-			"type": "command",
-			"command": "extension.commandvariable.remember",
-			"args": {
-				"key": "build"
-			}
-		},
-		{
-			"id": "configProject",
-			"type": "command",
-			"command": "extension.commandvariable.file.content",
-			"args": {
-				"fileName": "${workspaceFolder}/.vscode/local_config.json",
-				"json": "content.server1.port",
-				"default": "4321",
-				"keyRemember": "ServerPort"
-			}
-		}
+        {
+            "id": "remember.svd",
+            "type": "command",
+            "command": "extension.commandvariable.file.content",
+            "args": {
+                "fileName": "${workspaceFolder}/.vscode/config_store.json",
+                "json": "content.svd",
+                "default": "",
+                "keyRemember": "svd"
+            }
+        },
+        {
+            "id": "remember.board",
+            "type": "command",
+            "command": "extension.commandvariable.file.content",
+            "args": {
+                "fileName": "${workspaceFolder}/.vscode/config_store.json",
+                "json": "content.board",
+                "default": "",
+                "keyRemember": "board"
+            }
+        },
+        {
+            "id": "remember.openocd",
+            "type": "command",
+            "command": "extension.commandvariable.file.content",
+            "args": {
+                "fileName": "${workspaceFolder}/.vscode/config_store.json",
+                "json": "content.openocd",
+                "default": "",
+                "keyRemember": "openocd"
+            }
+        }
 	]
 }

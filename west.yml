@@ -9,6 +9,7 @@ manifest:
     - name: zephyrproject-rtos
       url-base: https://github.com/zephyrproject-rtos
 
+
   projects:
     - name: zephyr
       remote: zephyrproject-rtos
@@ -20,3 +21,5 @@ manifest:
           - cmsis      # required by the ARM port
           - hal_atmel
           - hal_microchip
+          - mcuboot
+          - zcbor

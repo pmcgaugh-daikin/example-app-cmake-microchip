@@ -10,17 +10,16 @@
       "type": "cortex-debug",
       "servertype": "openocd",
       "configFiles": [
-        "${input:app.board_dir}/support/openocd.cfg"
+        "${input:project.openocd}"
       ],
       "device": "${input:app.soc_part_number}",
       "interface": "swd",
-      //"svdFile": "${input:project.svd}",
-      "armToolchainPath": "${workspaceRoot}/../../zephyr-sdk-0.16.0/arm-zephyr-eabi/bin",
-      "toolchainPrefix": "arm-zephyr-eabi",
+      "svdFile": "${input:project.svd}",
+      "armToolchainPath": "${input:app.toolchain_root}",
+      "toolchainPrefix": "arm-zephyr-eabi/bin/arm-zephyr-eabi",
       "runToEntryPoint": "main",
       "preLaunchTask": "build",
       "rtos": "Zephyr"
-      //"cmsisPack": ""
     },
     {
       "name": "Ceedling Test Explorer Debug",
@@ -89,14 +88,6 @@
       }
     },
     {
-      "id": "project.soc",
-      "type": "command",
-      "command": "extension.commandvariable.remember",
-      "args": {
-        "key": "soc"
-      }
-    },
-    {
       "id": "project.build",
       "type": "command",
       "command": "extension.commandvariable.remember",
@@ -123,18 +114,18 @@
             "fileName": "${workspaceFolder}/app/.vscode/cmake_cache.json",
             "json": "content.CONFIG_SOC_PART_NUMBER",
             "default": "",
-            "keyRemember": "CONFIG_SOC_PART_NUMBER"
+            "keyRemember": "app.soc_part_number"
         }
     },
     {
-        "id": "app.soc_part_number",
+        "id": "app.toolchain_root",
         "type": "command",
         "command": "extension.commandvariable.file.content",
         "args": {
             "fileName": "${workspaceFolder}/app/.vscode/cmake_cache.json",
-            "json": "content.CONFIG_SOC_PART_NUMBER",
+            "json": "content.ZEPHYR_SDK_INSTALL_DIR",
             "default": "",
-            "keyRemember": "CONFIG_SOC_PART_NUMBER"
+            //"keyRemember": "app.toolchain_root"
         }
     }
   ]

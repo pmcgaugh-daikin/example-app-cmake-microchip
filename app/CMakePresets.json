@@ -1,21 +1,22 @@
 {
-    "version": 2,
+    "version": 6,
     "cmakeMinimumRequired": {
         "major": 3,
-        "minor": 20
+        "minor": 25
     },
     "configurePresets": [
-        {   
+        {
             "name": "atsame54_xpro",
-            "displayName": "Build for SAM E54 Xplained Pro",
+            "displayName": "Build App for SAM E54 Xplained Pro",
             "generator": "Ninja",
             "binaryDir": "build",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "NCS_TOOLCHAIN_VERSION": "NONE",
                 "BOARD": "atsame54_xpro",
                 "BOARD_ROOT": "../;../../zephyr",
-                "CONF_FILE": "prj.conf"
+                "CONF_FILE": "prj.conf",
+                "DTC_OVERLAY_FILE": "",
+                "CONFIG_APP_MCUBOOT_BUILD": "n"
             }
         }
     ]

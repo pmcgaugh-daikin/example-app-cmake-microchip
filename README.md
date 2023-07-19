@@ -46,7 +46,7 @@ command:
 
 ```shell
 # initialize my-workspace for the example-application (main branch)
-west init -m https://github.com/pmcgaugh-daikin/example-app-microchip-vscode.git --mr main my-workspace
+west init -m https://github.com/pmcgaugh-daikin/mchp-zephyr-demo.git --mr main my-workspace
 # update Zephyr modules
 cd my-workspace
 west update
@@ -80,8 +80,16 @@ west flash
 ```
 
 ### Building and running with cmake
+
 From the application repository directory:
+
 ```shell
 cmake app -DCMAKE_BUILD_TYPE=Release --preset=atsame54_xpro
 cmake --build app/build
+```
+
+### Building and running test cases (same54_xpro example)
+
+```shell
+west twister --device-testing --device-serial <YOUR_COM_PORT> --device-serial-baud 115200 -p atsame54_xpro -T tests
 ```

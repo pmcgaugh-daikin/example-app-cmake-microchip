@@ -7,6 +7,9 @@
             "path": "../../zephyr"
         },
         {
+            "path": "../../bootloader"
+        },
+        {
             "path": "../../modules"
         },
         {
@@ -24,6 +27,7 @@
             //"fredericbonnet.cmake-test-adapter", // find and display tests generated through cmake in test explorer
             //"nordic-semiconductor.nrf-connect-extension-pack", // nrf-connect tool-suite, contains: dtc/kconfig syntax/navigation, app management, gnu linker map tool
             //"ms-vscode.cmake-tools", // MS CMake tools, nice integration and better linting in code...nrf-connect does not like it installed
+            //"mcu-debug.peripheral-viewer", // svd file viewer, nice for debugging peripherals
             // Additional tools Suggestions:
             // [Todo Highlighting](https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight)
             // [Todo Sidebar Tree](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree)
@@ -67,9 +71,6 @@
                "visibility": "hidden"
             }
         },
-        //"cmake.statusbar.visibility": "compact",
-        //"nrf-connect.applications": [
-        //    "${workspaceFolder}\\app"
-        //],
+        //"cmake.statusbar.visibility": "compact"
     }
 }

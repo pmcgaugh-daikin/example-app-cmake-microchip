@@ -11,4 +11,8 @@
 /twister-out*
 cmake.check_cache
 
+local_configs.json
+user_configs.json
+config_store.json
+
 __pycache__/

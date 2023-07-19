@@ -3,8 +3,8 @@ name: Build
 on:
   push:
   pull_request:
-  schedule:
-    - cron: "0 0 * * *"
+  #schedule:
+  #  - cron: "0 0 * * *"
 
 jobs:
   build:
@@ -25,17 +25,17 @@ jobs:
           west update
 
       - name: Build Firmware
-        working-directory: zephyrprojectworkspace/example-app-microchip-vscode.git
+        working-directory: zephyrprojectworkspace/mchp-zephyr-demo.git
         run: |
           cmake app -DCMAKE_BUILD_TYPE=Release --preset=atsame54_xpro
           cmake --build app/build
 
-      #- name: Build Firmware Tests 
-      #  working-directory: example-application
-      #  run: |
-      #    west twister -T app -v --inline-logs --integration
+      - name: Build Firmware With Twister
+        working-directory: example-application
+        run: |
+          west twister -T app -v --inline-logs --integration
 
-      #- name: Twister Tests
-      #  working-directory: example-application
-      #  run: |
-      #    west twister -T tests --integration
+      - name: Twister Tests
+        working-directory: example-application
+        run: |
+          west twister -T tests --integration

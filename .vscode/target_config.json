@@ -1,0 +1,18 @@
+{
+    "targets": [
+            {
+                "name": "ItsyBitsy M4 Express",
+                "openocd": "${workspaceFolder}/soc/PATH/HERE",
+                "svd": "${workspaceFolder}/soc/PATH/HERE",
+                "board": "adafruit_itsybitsy_m4_express",
+                "soc": "atsamd51n20"
+            },
+            {
+                "name": "ATSAME54 XPro",
+                "openocd": "${workspaceFolder}/soc/same54/openocd.cfg",
+                "svd": "${workspaceFolder}/soc/same54/svd/ATSAME54P20A.svd",
+                "board": "atsame54_xpro",
+                "soc": "atsame54p20"
+            }
+    ]
+}
