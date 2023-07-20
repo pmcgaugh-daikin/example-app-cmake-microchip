@@ -10,9 +10,12 @@
 			"args": [
 				"${workspaceFolder}/scripts/save_config.py",
 				"${workspaceFolder}/.vscode/config_store.json",
-				"board", "${input:project.board}",
-				"svd", "${input:project.svd}",
-				"openocd", "${input:project.openocd}"
+				"board",
+				"${input:project.board}",
+				"svd",
+				"${input:project.svd}",
+				"openocd",
+				"${input:project.openocd}"
 			],
 			"dependsOn": [
 				"Config Prompt"
@@ -29,42 +32,83 @@
 		{
 			"label": "Config Prompt",
 			"type": "shell",
+			"presentation": {
+				"echo": false,
+				"reveal": "always",
+				"focus": true,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},"linux":{
 			"command": "echo",
 			"args": [
-                "${input:project.config}",
-                "==============================================",
-				"Remembered project.board: ${input:project.board}",
-				"Remembered project.svd: ${input:project.svd}",
-				"Remembered project.openocd: ${input:project.openocd}",
-                "=============================================="
-			],
+				"\"",
+				"${input:project.config}",
+				"==============================================\n",
+				"Remembered project.board: ${input:project.board}\n",
+				"Remembered project.svd: ${input:project.svd}\n",
+				"Remembered project.openocd: ${input:project.openocd}\n",
+				"==============================================\n",
+				"\""
+			],},
+			"windows":{
+				"command": "echo",
+				"args": [
+					"${input:project.config}",
+					"==============================================",
+					"Remembered project.board: ${input:project.board}",
+					"Remembered project.svd: ${input:project.svd}",
+					"Remembered project.openocd: ${input:project.openocd}",
+					"==============================================",
+				],},
 			"options": {
 				"statusbar": {
 					"hide": true
 				}
 			}
 		},
-        {
-            "label": "Startup Config",
-            "type": "shell",
-            "command": "echo",
-            "args": [
-                "Restored the following from local_config.json:",
-                "==============================================",
-                "SVD File: ${input:remember.svd}",
-                "Board Target: ${input:remember.board}",
-                "OpenOCD File: ${input:remember.openocd}",
-                "=============================================="
-            ],
-            "options": {
-                "statusbar": {
-                    "hide": true
-                }
-            },
-            "runOptions": {
-                "runOn": "folderOpen"
-            }
-        },
+		{
+			"label": "Startup Config",
+			"type": "shell",
+			"presentation": {
+				"echo": false,
+				"reveal": "always",
+				"focus": true,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},
+			"windows":{
+			"command": "echo",
+			"args": [
+				"Restored the following from local_config.json:",
+				"==============================================",
+				"SVD File: ${input:remember.svd}",
+				"Board Target: ${input:remember.board}",
+				"OpenOCD File: ${input:remember.openocd}",
+				"=============================================="
+			],},
+			"linux":{
+				"command": "echo",
+				"args": [
+					"\"",
+					"Restored the following from local_config.json:\n",
+					"==============================================\n",
+					"SVD File: ${input:remember.svd}\n",
+					"Board Target: ${input:remember.board}\n",
+					"OpenOCD File: ${input:remember.openocd}\n",
+					"==============================================\n",
+					"\""
+				],},
+			"options": {
+				"statusbar": {
+					"hide": true
+				}
+			},
+			"runOptions": {
+				"runOn": "folderOpen"
+			}
+		},
 		{
 			"label": "Flash App",
 			"type": "shell",
@@ -110,8 +154,8 @@
 			"label": "Set Zephyr Source",
 			"type": "shell",
 			"group": "build",
-			"command": "${workspaceFolder}/../zephyr/zephyr-env.cmd",
-			"args": [],
+			"windows": {"command": "${workspaceFolder}/../zephyr/zephyr-env.cmd"},
+			"linux": {"command": "${workspaceFolder}/../zephyr/zephyr-env.sh"},
 			"dependsOn": [],
 			"problemMatcher": [],
 			"options": {
@@ -219,7 +263,7 @@
 			"label": "Reconfigure",
 			"command": "cmake",
 			"args": [
-                "${workspaceFolder}/app",
+				"${workspaceFolder}/app",
 				"--preset",
 				"${command:cmake.activeConfigurePresetName}"
 			],
@@ -231,34 +275,34 @@
 				}
 			}
 		},
-        {
-            "label": "Build MCUBoot",
-            "type": "shell",
-            "group": "build",
-            "command": "west",
-            "args": [
-                "build",
-                "-b",
-                "atsame54_xpro",
-                "-p",
-                "auto",
-                "../bootloader/mcuboot/boot/zephyr",
-                "--",
-                "-DDTC_OVERLAY_FILE='../../../../mchp-zephyr-demo.git/app/confs_overlays/atsame54_xpro_mcuboot_partitions.overlay;usb_cdc_acm.overlay;../../../../mchp-zephyr-demo.git/app/confs_overlays/bootloader/atsame54_xpro_bootloader.overlay;app.overlay'",
-                "-DEXTRA_CONF_FILE='../../../../mchp-zephyr-demo.git/app/confs_overlays/bootloader/atsame54_xpro_bootloader.conf;usb_cdc_acm_log_recovery.conf'"
-            ],
-            "dependsOn": [
-                "Set Zephyr Source"
-            ],
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "options": {
-                "statusbar": {
-                    "hide": false
-                }
-            }
-        }
+		{
+			"label": "Build MCUBoot",
+			"type": "shell",
+			"group": "build",
+			"command": "west",
+			"args": [
+				"build",
+				"-b",
+				"atsame54_xpro",
+				"-p",
+				"auto",
+				"../bootloader/mcuboot/boot/zephyr",
+				"--",
+				"-DDTC_OVERLAY_FILE='../../../../mchp-zephyr-demo.git/app/confs_overlays/atsame54_xpro_mcuboot_partitions.overlay;usb_cdc_acm.overlay;../../../../mchp-zephyr-demo.git/app/confs_overlays/bootloader/atsame54_xpro_bootloader.overlay;app.overlay'",
+				"-DEXTRA_CONF_FILE='../../../../mchp-zephyr-demo.git/app/confs_overlays/bootloader/atsame54_xpro_bootloader.conf;usb_cdc_acm_log_recovery.conf'"
+			],
+			"dependsOn": [
+				//"Set Zephyr Source"
+			],
+			"problemMatcher": [
+				"$gcc"
+			],
+			"options": {
+				"statusbar": {
+					"hide": false
+				}
+			}
+		}
 	],
 	"inputs": [
 		{
@@ -267,16 +311,16 @@
 			"command": "extension.commandvariable.pickStringRemember",
 			"args": {
 				"key": "empty",
-                "fileName":"${workspaceFolder}/.vscode/target_config.json",
-                "fileFormat":"json",
-                "jsonOption": {
-                    "label": "content.targets[__itemIdx__].name",
-                    "value": {
-                        "openocd": "content.targets[__itemIdx__].openocd",
-                        "svd": "content.targets[__itemIdx__].svd",
-                        "board": "content.targets[__itemIdx__].board"
-                    }
-                },
+				"fileName": "${workspaceFolder}/.vscode/target_config.json",
+				"fileFormat": "json",
+				"jsonOption": {
+					"label": "content.targets[__itemIdx__].name",
+					"value": {
+						"openocd": "content.targets[__itemIdx__].openocd",
+						"svd": "content.targets[__itemIdx__].svd",
+						"board": "content.targets[__itemIdx__].board"
+					}
+				},
 				"description": "Choose a Board"
 			}
 		},
@@ -304,38 +348,38 @@
 				"key": "svd"
 			}
 		},
-        {
-            "id": "remember.svd",
-            "type": "command",
-            "command": "extension.commandvariable.file.content",
-            "args": {
-                "fileName": "${workspaceFolder}/.vscode/config_store.json",
-                "json": "content.svd",
-                "default": "",
-                "keyRemember": "svd"
-            }
-        },
-        {
-            "id": "remember.board",
-            "type": "command",
-            "command": "extension.commandvariable.file.content",
-            "args": {
-                "fileName": "${workspaceFolder}/.vscode/config_store.json",
-                "json": "content.board",
-                "default": "",
-                "keyRemember": "board"
-            }
-        },
-        {
-            "id": "remember.openocd",
-            "type": "command",
-            "command": "extension.commandvariable.file.content",
-            "args": {
-                "fileName": "${workspaceFolder}/.vscode/config_store.json",
-                "json": "content.openocd",
-                "default": "",
-                "keyRemember": "openocd"
-            }
-        }
+		{
+			"id": "remember.svd",
+			"type": "command",
+			"command": "extension.commandvariable.file.content",
+			"args": {
+				"fileName": "${workspaceFolder}/.vscode/config_store.json",
+				"json": "content.svd",
+				"default": "",
+				"keyRemember": "svd"
+			}
+		},
+		{
+			"id": "remember.board",
+			"type": "command",
+			"command": "extension.commandvariable.file.content",
+			"args": {
+				"fileName": "${workspaceFolder}/.vscode/config_store.json",
+				"json": "content.board",
+				"default": "",
+				"keyRemember": "board"
+			}
+		},
+		{
+			"id": "remember.openocd",
+			"type": "command",
+			"command": "extension.commandvariable.file.content",
+			"args": {
+				"fileName": "${workspaceFolder}/.vscode/config_store.json",
+				"json": "content.openocd",
+				"default": "",
+				"keyRemember": "openocd"
+			}
+		}
 	]
 }

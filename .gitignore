@@ -9,10 +9,11 @@
 /build*
 /app/build*
 /twister-out*
-cmake.check_cache
 
+cmake_cache.json
 local_configs.json
 user_configs.json
 config_store.json
+.vscode/settings.json
 
 __pycache__/

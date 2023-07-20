@@ -24,6 +24,10 @@ if("${CONFIG_APP_MCUBOOT_BUILD}" STREQUAL "y")
     append_zephyr_overlay(confs_overlays/mcuboot.overlay)
 endif()
 
+if("${CONFIG_APP_THREAD_ANALYSER}" STREQUAL "y")
+    append_zephyr_config(confs_overlays/thread_analysis.conf)
+endif()
+
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 
 project(app LANGUAGES C)

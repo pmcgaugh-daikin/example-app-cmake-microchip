@@ -22,7 +22,6 @@ int main(void)
     static const struct gpio_dt_spec led0 = GPIO_DT_SPEC_GET(DT_ALIAS(led0), gpios);
     gpio_pin_configure_dt(&led0, GPIO_OUTPUT);
 
-
 	while (1) {
         if (!gpio_is_ready_dt(&led0))
         {

@@ -52,6 +52,39 @@ cd my-workspace
 west update
 ```
 
+#### Setting up the workspace, step by step 
+
+> <span style="color:yellow">**Warning**</span>
+> please refer to the official instructions) along with these
+> [Zephyr Getting Started Guide](https://docs.zephyrproject.org/latest/getting_started/index.html).
+
+1. Install python & pip
+2. Install pip ```pip install west```
+3. ```west init -m <THIS REPO> --mr main <WORKSPACE>```
+4. ```cd <WORKSPACE>```
+5. ```west update```
+6. ```west zephyr-export```
+7. ```pip install -r zephyr/scripts/requirements.txt"```
+9. Install a relevant copy of Zephyr SDK and use the correct command to activate it
+8. Install recommended extensions for this repository
+
+### Building and running with VScode
+
+![TaskBarImage](assets/Taskbar.png)
+
+In the bottom bar of vscode (status/task bar) there are a number of options...to build and test software you must:
+
+1. Select a CMake Preset (this comes from the app/CMakePresets.json) and refers to the far right button that says "No Configure Preset Selected" by default
+2. Build for that target:
+    - "Build" will execute on the existing app/build subdirectory, performing a normal compile
+    - "Clean Rebuild" will execute on the app/build directory, reconfiguring CMake and then building the software
+
+> <span style="color:yellow">**Warning**</span>
+> If you make a change to a Zephyr config for DTS/overlay file, you might need to delete your build folder...any pre-existing settings that are not overwritten will retain their previous value
+
+3. Once your image is built, you must select a programming target via the leftmost "Target" button (This comes from the .vscode/target_config.json)
+4. You can now debug via "App Debug" in the normal debug menu or bottom bar, or you may flash your image with the "Flash App" button
+
 ### Building and running with west
 
 To build the application, run the following command:
@@ -89,6 +122,9 @@ cmake --build app/build
 ```
 
 ### Building and running test cases (same54_xpro example)
+
+> <span style="color:yellow">**Warning**</span>
+> This might not be working right as currently set up and needs to be verified.
 
 ```shell
 west twister --device-testing --device-serial <YOUR_COM_PORT> --device-serial-baud 115200 -p atsame54_xpro -T tests

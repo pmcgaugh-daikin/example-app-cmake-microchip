@@ -18,16 +18,11 @@
     ],
     "extensions": {
         "recommendations": [
-            //"marus25.cortex-debug", // debugger integration
-            //"twxs.cmake", // Cmake integration
-            //"redhat.vscode-yaml", // yaml syntax, typically a file used for pipelines and other configs
-            //"DavidAnson.vscode-markdownlint", // markdown file linting tool
-            //"hbenl.vscode-test-explorer", // test explorer integration for VScode, creates nice view of test cases
-            //"ms-vscode.test-adapter-converter", // adapter for test explorer to VSCode...not sure if it's needed?
-            //"fredericbonnet.cmake-test-adapter", // find and display tests generated through cmake in test explorer
-            //"nordic-semiconductor.nrf-connect-extension-pack", // nrf-connect tool-suite, contains: dtc/kconfig syntax/navigation, app management, gnu linker map tool
-            //"ms-vscode.cmake-tools", // MS CMake tools, nice integration and better linting in code...nrf-connect does not like it installed
-            //"mcu-debug.peripheral-viewer", // svd file viewer, nice for debugging peripherals
+            "rioj7.command-variable",
+            "marus25.cortex-debug", // debugger integration
+            "redhat.vscode-yaml", // yaml syntax, typically a file used for pipelines and other configs
+            "actboy168.tasks", // Place tasks in the bottom bar
+            "ms-vscode.cpptools-extension-pack",
             // Additional tools Suggestions:
             // [Todo Highlighting](https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight)
             // [Todo Sidebar Tree](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree)
@@ -38,7 +33,6 @@
         ]
     },
     "settings":{
-        //"C_Cpp.default.configurationProvider": "nrf-connect", 
         "C_Cpp.default.configurationProvider":"ms-vscode.cmake-tools",
         "cmake.allowCommentsInPresetsFile": true,
         "cmake.configureOnEdit": false,
@@ -50,7 +44,7 @@
         "cmake.sourceDirectory": "${workspaceFolder}/app",
         "cmake.statusbar.advanced": {
             "build": {
-               //"visibility": "hidden"
+               "visibility": "hidden"
             },
             "buildPreset": {
                "visibility": "hidden"
@@ -69,6 +63,12 @@
             },
             "testPreset": {
                "visibility": "hidden"
+            },
+            "ctest": {
+                "visibility": "hidden"
+            },
+            "workspace": {
+                "visibility": "hidden"
             }
         },
         //"cmake.statusbar.visibility": "compact"
