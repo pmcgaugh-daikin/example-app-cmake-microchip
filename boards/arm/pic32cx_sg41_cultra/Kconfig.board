@@ -1,0 +1,9 @@
+# PIC32CX SG41 Curiosity Ultra Board Kconfig
+
+# Copyright (c) 2023 Daikin Comfort Technologies North America, Inc.
+# Copyright (c) 2018 Bryan O'Donoghue
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_PIC32CX_SG41_CULTRA
+	bool "PIC32CX SG41 Curiosity Ultra"
+	depends on SOC_PART_NUMBER_SAMD51N20A

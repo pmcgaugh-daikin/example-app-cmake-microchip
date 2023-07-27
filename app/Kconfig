@@ -19,6 +19,11 @@ config APP_MCUBOOT_BUILD
      depends on BOARD_ATSAME54_XPRO
      default n
 
+config APP_OPENTHREAD_BUILD
+     bool "Enable openthread support for the application"
+     depends on BOARD_ATSAME54_XPRO
+     default n
+
 config APP_THREAD_ANALYSIS
      bool "Enable thread analysis logic in the application"
      default n

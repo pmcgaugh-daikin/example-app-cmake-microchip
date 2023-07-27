@@ -40,7 +40,7 @@
         "cmake.showSystemKits": false,
         "cmake.ignoreCMakeListsMissing": true,
         "C_Cpp.autoAddFileAssociations": false,
-        "cmake.autoSelectActiveFolder": true,
+        "cmake.autoSelectActiveFolder": false,
         "cmake.sourceDirectory": "${workspaceFolder}/app",
         "cmake.statusbar.advanced": {
             "build": {

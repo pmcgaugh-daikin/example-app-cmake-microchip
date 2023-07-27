@@ -1,0 +1,20 @@
+# Copyright (c) 2019 Benjamin Valentin
+# SPDX-License-Identifier: Apache-2.0
+identifier: pic32cx_sg41_cultra
+name: PIC32CX SG41 Curiosity Ultra Board
+type: mcu
+arch: arm
+ram: 256
+flash: 1024
+toolchain:
+  - zephyr
+  - gnuarmemb
+  - xtools
+supported:
+  - adc
+  - gpio
+  - pwm
+  - spi
+  - i2c
+  - usb_device
+  - netif:eth

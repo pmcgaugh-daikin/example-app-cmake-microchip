@@ -8,7 +8,7 @@
         {
             "name": "atsame54_xpro",
             "displayName": "Build App for SAM E54 Xplained Pro",
-            "generator": "Ninja",
+        "generator": "Ninja",
             "binaryDir": "build",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
@@ -17,7 +17,24 @@
                 "CONF_FILE": "prj.conf",
                 "DTC_OVERLAY_FILE": "",
                 "CONFIG_APP_MCUBOOT_BUILD": "n",
-                "CONFIG_APP_THREAD_ANALYSIS":"y"
+                "CONFIG_APP_THREAD_ANALYSIS":"y",
+                "CONFIG_APP_OPENTHREAD_BUILD":"y"
+            }
+        },
+        {
+            "name": "pic32cx_sg41_cultra",
+            "displayName": "Build App for PIC32CX SG41 Curiosity Ultra",
+            "generator": "Ninja",
+            "binaryDir": "build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "BOARD": "pic32cx_sg41_cultra",
+                "BOARD_ROOT": "../;../../zephyr",
+                "CONF_FILE": "prj.conf",
+                "DTC_OVERLAY_FILE": "",
+                "CONFIG_APP_MCUBOOT_BUILD": "n",
+                "CONFIG_APP_THREAD_ANALYSIS":"y",
+                "CONFIG_APP_OPENTHREAD_BUILD":"y"
             }
         }
     ]

@@ -1,0 +1,36 @@
+# PIC32CX SG41 Curiosity Ultra Board Configuration
+
+# Copyright (c) 2023 Daikin Comfort Technologies North America, Inc.
+# Copyright (c) 2019 Benjamin Valentin
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_PIC32CX_SG41_CULTRA
+
+config BOARD
+	default "pic32cx_sg41_cultra"
+	depends on BOARD_PIC32CX_SG41_CULTRA
+
+if ETH_SAM_GMAC
+
+# Read MAC address from AT24MAC402 EEPROM
+
+config ETH_SAM_GMAC_MAC_I2C_INT_ADDRESS
+	default 0x9A
+
+config ETH_SAM_GMAC_MAC_I2C_INT_ADDRESS_SIZE
+	default 1
+
+config ETH_SAM_GMAC_MAC_I2C_EEPROM
+	default y
+	select I2C
+
+endif # ETH_SAM_GMAC
+
+if NETWORKING
+
+config NET_L2_ETHERNET
+	default y
+
+endif # NETWORKING
+
+endif # BOARD_PIC32CX_SG41_CULTRA
