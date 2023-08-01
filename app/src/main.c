@@ -15,6 +15,17 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(main, CONFIG_APP_LOG_LEVEL);
 
+#ifdef CONFIG_APP_CDC_ACM_LOGGING
+#define USB_CDC_ACM_STACK_SIZE 500
+#define USB_CDC_ACM_PRIORITY 5
+
+extern void usb_cdc_acm_thread(void *, void *, void *);
+
+K_THREAD_DEFINE(my_tid, USB_CDC_ACM_STACK_SIZE,
+                usb_cdc_acm_thread, NULL, NULL, NULL,
+                USB_CDC_ACM_PRIORITY, 0, 0);
+#endif
+
 int main(void)
 {
     printk("Zephyr Example Application %s\n", APP_VERSION_STRING);

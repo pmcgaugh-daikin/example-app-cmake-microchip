@@ -28,11 +28,22 @@ if("${CONFIG_APP_THREAD_ANALYSER}" STREQUAL "y")
     append_zephyr_config(confs_overlays/thread_analysis.conf)
 endif()
 
+if("${CONFIG_APP_OPENTHREAD_BUILD}" STREQUAL "y")
+    append_zephyr_config(confs_overlays/ot.conf)
+    append_zephyr_overlay(confs_overlays/atsame54_xpro_openthread_partitions.overlay)
+endif()
+
+if("${CONFIG_APP_CDC_ACM_LOGGING}" STREQUAL "y")
+    append_zephyr_config(confs_overlays/cdc_acm_uart.conf)
+    append_zephyr_overlay(confs_overlays/cdc_acm_uart.overlay)
+endif()
+
+
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 
 project(app LANGUAGES C)
 
-target_sources(app PRIVATE src/main.c)
+target_sources(app PRIVATE src/main.c src/usb_cdc_acm_logging.c)
 
 get_cmake_property(_variableNames VARIABLES)
 list(SORT _variableNames)

@@ -27,3 +27,7 @@ config APP_OPENTHREAD_BUILD
 config APP_THREAD_ANALYSIS
      bool "Enable thread analysis logic in the application"
      default n
+
+config APP_CDC_ACM_LOGGING
+     bool "Enable USB CDC ACM logging support"
+     default n

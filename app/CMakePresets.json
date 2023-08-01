@@ -18,7 +18,8 @@
                 "DTC_OVERLAY_FILE": "",
                 "CONFIG_APP_MCUBOOT_BUILD": "n",
                 "CONFIG_APP_THREAD_ANALYSIS":"y",
-                "CONFIG_APP_OPENTHREAD_BUILD":"y"
+                "CONFIG_APP_OPENTHREAD_BUILD":"n",
+                "CONFIG_APP_CDC_ACM_LOGGING":"n"
             }
         },
         {
